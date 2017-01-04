@@ -16,6 +16,10 @@
 
 package io.vertx.core;
 
+import io.vertx.core.impl.FailedResult;
+import io.vertx.core.impl.NoStackTraceThrowable;
+import io.vertx.core.impl.SucceededResult;
+
 import java.util.function.Function;
 
 /**
@@ -32,6 +36,18 @@ import java.util.function.Function;
  * @author <a href="http://tfox.org">Tim Fox</a>
  */
 public interface AsyncResult<T> {
+
+  static <T> AsyncResult<T> success(T result) {
+    return new SucceededResult<>(result);
+  }
+
+  static <T> AsyncResult<T> failure(Throwable throwable) {
+    return new FailedResult<>(throwable);
+  }
+
+  static <T> AsyncResult<T> failure(String failureMessage) {
+    return new FailedResult<>(failureMessage);
+  }
 
   /**
    * The result of the operation. This will be null if the operation failed.
