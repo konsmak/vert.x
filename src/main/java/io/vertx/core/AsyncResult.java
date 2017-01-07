@@ -17,7 +17,6 @@
 package io.vertx.core;
 
 import io.vertx.core.impl.FailedResult;
-import io.vertx.core.impl.NoStackTraceThrowable;
 import io.vertx.core.impl.SucceededResult;
 
 import java.util.function.Function;
@@ -37,14 +36,32 @@ import java.util.function.Function;
  */
 public interface AsyncResult<T> {
 
+  /**
+   * Created a succeeded result with the specified result.
+   *
+   * @param result the result
+   * @return the success
+   */
   static <T> AsyncResult<T> success(T result) {
     return new SucceededResult<>(result);
   }
 
+  /**
+   * Create a failed result with the specified failure cause.
+   *
+   * @param throwable the failure cause as a Throwable
+   * @return the failure
+   */
   static <T> AsyncResult<T> failure(Throwable throwable) {
     return new FailedResult<>(throwable);
   }
 
+  /**
+   * Create a failed result with the specified failure message.
+   *
+   * @param failureMessage the failure message
+   * @return the failure
+   */
   static <T> AsyncResult<T> failure(String failureMessage) {
     return new FailedResult<>(failureMessage);
   }
